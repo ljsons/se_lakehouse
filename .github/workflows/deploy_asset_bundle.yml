@@ -3,10 +3,7 @@ name: "DBX Deployment"
 concurrency: 1
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
     branches:
       - main
 
