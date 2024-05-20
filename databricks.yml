@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=bundle_config_schema.json
+bundle:
+    name: se_lakehouse
+  
+resources:
+    pipelines:
+        load_bronze_dynamically:
+            name: load_bronze_dynamically
+            development: true
+            continuous: false
+            channel: "CURRENT"
+            photon: false
+            libraries:
+                - notebook:
+                    path: ./notebooks/dynamic-dlt/dynamic_broze_dlt.py
+            edition: "ADVANCED"
+            clusters:
+               - label: "default"
+                 num_workers: 1
+                    
+targets:
+    development:
+        workspace:
+            host: "https://adb-1389041921641840.0.azuredatabricks.net"

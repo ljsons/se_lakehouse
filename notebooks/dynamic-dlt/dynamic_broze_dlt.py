@@ -22,7 +22,7 @@ dbutils.widgets.text("paramsJson", "")
 
 testParams = """[{
     "source": "bikeshare",
-    "tableName": "divvystations",
+    "tableName": "divvystations_bundle",
     "landingZonePath": "/divvy/",
     "format": "csv",
     "includesHeader": "true",
