@@ -16,7 +16,7 @@ resources:
             edition: "ADVANCED"
             clusters:
                - label: "default"
-                 num_workers: 1
+                 num_workers: 4
                     
 targets:
     development:
