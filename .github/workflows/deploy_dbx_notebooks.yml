@@ -30,19 +30,19 @@ jobs:
         #           -d 'scope=2ff814a6-3304-4ab8-85cb-cd0e6f879c1d%2F.default' \
         #           -d 'client_secret=${{ secrets.AZURE_SP_CLIENT_SECRET }}' |  jq -r  '.access_token')" >> $GITHUB_ENV  
           - name: "Configure CLI"
-            run: databricks configure --host https://$${{ vars.DBX_HOST }}.azuredatabricks.net --azure_tenant_id ${{ vars.AZURE_SP_TENANT_ID }} --azure-client-id ${{ vars.AZURE_SP_APPLICATION_ID }} --azure-client-secret ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+            run: databricks configure --host https://${{ vars.DBX_HOST }}.azuredatabricks.net --azure_tenant_id ${{ vars.AZURE_SP_TENANT_ID }} --azure-client-id ${{ vars.AZURE_SP_APPLICATION_ID }} --azure-client-secret ${{ secrets.AZURE_SP_CLIENT_SECRET }}
         #   - name: "Login to Databricks"
         #     run: databricks auth login
           - name: "Set env host"
-            run: echo "DATABRICKS_HOST=https://$${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
+            run: echo "DATABRICKS_HOST=https://(${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
           - name: "Set env token"
-            run: echo "ARM_CLIENT_SECRET=$${{ secrets.AZURE_SP_CLIENT_SECRET }}" >> $GITHUB_ENV
+            run: echo "ARM_CLIENT_SECRET=${{ secrets.AZURE_SP_CLIENT_SECRET }}" >> $GITHUB_ENV
           - name: "Set env tenant"
-            run: echo "ARM_TENANT_ID=$${{ vars.AZURE_SP_TENANT_ID }}" >> $GITHUB_ENV
+            run: echo "ARM_TENANT_ID=${{ vars.AZURE_SP_TENANT_ID }}" >> $GITHUB_ENV
           - name: "Set env client" 
-            run: echo "ARM_CLIENT_ID=$${{ vars.AZURE_SP_APPLICATION_ID }}" >> $GITHUB_ENV
+            run: echo "ARM_CLIENT_ID=${{ vars.AZURE_SP_APPLICATION_ID }}" >> $GITHUB_ENV
 
           - name: "Login to Databricks"
-            run: databricks auth login --host https://$${{ vars.DBX_HOST }}.azuredatabricks.net
+            run: databricks auth login --host https://${{ vars.DBX_HOST }}.azuredatabricks.net
           - name: "Deploy notebooks"
             run: databricks workspace import_dir --overwrite '/notebooks/' '/shared/notebooks/'
