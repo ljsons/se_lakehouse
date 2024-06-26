@@ -1,4 +1,4 @@
-name: "DBX Deployment"
+name: "DAB Deployment"
 
 concurrency: 1
 
@@ -17,6 +17,9 @@ jobs:
 
       - name: "Setup CLI"
         uses: databricks/setup-cli@main
+
+      - name: "Login to Databricks"
+        run: databricks auth login 
       
       - run: databricks bundle deploy
         working-directory: . 

@@ -22,3 +22,7 @@ targets:
     development:
         workspace:
             host: "https://adb-1389041921641840.0.azuredatabricks.net"
+    qa: 
+        workspace:
+            host: "https://adb-4447290488445598.18.azuredatabricks.net"
+            azure_client_id: "d58ce88c-554b-4982-b425-e7c971565613"
