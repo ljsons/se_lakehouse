@@ -10,28 +10,26 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: "Checkout"
-                uses: actions/checkout@v3
+          - name: "Checkout"
+            uses: actions/checkout@v3
 
-            - name: "Setup CLI"
-                uses: databricks/setup-cli@main
+          - name: "Setup CLI"
+            uses: databricks/setup-cli@main
             # The step below does the following:
             # 1. Sends a POST request to generate an Azure Active Directory token for an Azure service principal
             # 2. Parses the token from the request response and then saves that in as DATABRICKS_TOKEN in the
             # GitHub enviornment.
             # Note: if the API request fails, the request response json will not have an "access_token" field and
             # the DATABRICKS_TOKEN env variable will be empty.
-            - name: "Generate AAD Token"
-                run: |
-                    echo "DATABRICKS_TOKEN=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
-                    https://login.microsoftonline.com/${{ vars.AZURE_SP_TENANT_ID }}/oauth2/v2.0/token \
-                    -d 'client_id=${{ vars.AZURE_SP_APPLICATION_ID }}' \
-                    -d 'grant_type=client_credentials' \
-                    -d 'scope=2ff814a6-3304-4ab8-85cb-cd0e6f879c1d%2F.default' \
-                    -d 'client_secret=${{ secrets.AZURE_SP_CLIENT_SECRET }}' |  jq -r  '.access_token')" >> $GITHUB_ENV
-
-            - name: "Login to Databricks"
-                run: databricks auth login 
-
-            - name: "Deploy notebooks"
-                run: databricks workspace import_dir --overwrite '/notebooks/' '/shared/notebooks/'
+          - name: "Generate AAD Token"
+            run: |
+                  echo "DATABRICKS_TOKEN=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
+                  https://login.microsoftonline.com/${{ vars.AZURE_SP_TENANT_ID }}/oauth2/v2.0/token \
+                  -d 'client_id=${{ vars.AZURE_SP_APPLICATION_ID }}' \
+                  -d 'grant_type=client_credentials' \
+                  -d 'scope=2ff814a6-3304-4ab8-85cb-cd0e6f879c1d%2F.default' \
+                  -d 'client_secret=${{ secrets.AZURE_SP_CLIENT_SECRET }}' |  jq -r  '.access_token')" >> $GITHUB_ENV  
+          - name: "Login to Databricks"
+            run: databricks auth login   
+          - name: "Deploy notebooks"
+            run: databricks workspace import_dir --overwrite '/notebooks/' '/shared/notebooks/'
