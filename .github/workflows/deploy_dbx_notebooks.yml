@@ -21,7 +21,7 @@ jobs:
             # GitHub enviornment.
             # Note: if the API request fails, the request response json will not have an "access_token" field and
             # the DATABRICKS_TOKEN env variable will be empty.
-            - name: Generate AAD Token
+            - name: "Generate AAD Token"
                 run: |
                     echo "DATABRICKS_TOKEN=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
                     https://login.microsoftonline.com/${{ vars.AZURE_SP_TENANT_ID }}/oauth2/v2.0/token \
