@@ -34,7 +34,7 @@ jobs:
         #   - name: "Login to Databricks"
         #     run: databricks auth login
           - name: "Set env host"
-            run: echo "DATABRICKS_HOST=https://${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
+            run: echo "DATABRICKS_HOST=https://$${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
           - name: "Set env token"
             run: echo "ARM_CLIENT_SECRET=$${{ secrets.AZURE_SP_CLIENT_SECRET }}" >> $GITHUB_ENV
           - name: "Set env tenant"
