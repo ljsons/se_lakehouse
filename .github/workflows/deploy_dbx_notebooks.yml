@@ -33,9 +33,9 @@ jobs:
             run: databricks configure --host https://${{ vars.DBX_HOST }}.azuredatabricks.net \
                  --azure_tenant_id ${{ vars.AZURE_SP_TENANT_ID }} \
                  --azure-client-id ${{ vars.AZURE_SP_APPLICATION_ID }} \
-                 --azure-client-secret ${{ secrets.AZURE_SP_CLIENT_SECRET }} \
+                 --azure-client-secret ${{ secrets.AZURE_SP_CLIENT_SECRET }}
           - name: "Login to Databricks"
             run: databricks auth login
-            
+
           - name: "Deploy notebooks"
             run: databricks workspace import_dir --overwrite '/notebooks/' '/shared/notebooks/'
