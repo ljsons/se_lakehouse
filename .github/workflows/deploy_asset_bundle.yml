@@ -26,7 +26,6 @@ jobs:
         run: echo "[DEFAULT] \                                                           
              host = https://${{ vars.DBX_HOST }}.azuredatabricks.net" > ~/.databricks.cfg
 
-      - run: databricks bundle deploy --target development 
-        working-directory: . 
+      - run: databricks bundle deploy --target development
 
         
