@@ -26,4 +26,4 @@ jobs:
             run: echo "[DEFAULT] \                                                           
                  host = https://${{ vars.DBX_HOST }}.azuredatabricks.net" > ~/.databricks.cfg
           - name: "Deploy notebooks"
-            run: databricks workspace import-dir --overwrite '/notebooks/' '/shared/notebooks/'
+            run: databricks workspace import-dir --overwrite '/notebooks/' '/Shared/notebooks/'
