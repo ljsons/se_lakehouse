@@ -46,7 +46,12 @@ jobs:
             run: echo "ARM_TENANT_ID=${{ vars.AZURE_SP_TENANT_ID }}" >> $GITHUB_ENV
           - name: "Set env client" 
             run: echo "ARM_CLIENT_ID=${{ vars.AZURE_SP_APPLICATION_ID }}" >> $GITHUB_ENV
-
+          - name: "Az CLI Login" 
+            uses: azure/login@v1
+            with:
+              client-id: ${{ secrets.AZURE_SP_APPLICATION_ID }}
+              tenant-id: ${{ vars.AZURE_SP_TENANT_ID }}
+              subscription-id: "6c8e23df-4aec-4ed5-bec5-79853ea6c6c6"
           - name: "Login to Databricks"
             run: databricks auth login --host https://adb-1389041921641840.0.azuredatabricks.net
           - name: "Deploy notebooks"
