@@ -53,4 +53,4 @@ jobs:
         #   - name: "Login to Databricks"
         #     run: databricks auth login --host https://adb-1389041921641840.0.azuredatabricks.net
           - name: "Deploy notebooks"
-            run: databricks workspace import_dir --overwrite '/notebooks/' '/shared/notebooks/'
+            run: databricks workspace import-dir --overwrite '/notebooks/' '/shared/notebooks/'
