@@ -29,3 +29,5 @@ jobs:
              host = https://${{ vars.DBX_HOST }}.azuredatabricks.net" > ~/.databricks.cfg
       - name: "Deploy bundle"
         run: databricks bundle deploy --target development
+      - name: "Run full refresh to test"
+        run: databricks bundle run --target development --run-now --full-refresh      
