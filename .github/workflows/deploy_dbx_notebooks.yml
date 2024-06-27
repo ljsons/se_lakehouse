@@ -23,7 +23,7 @@ jobs:
             with:
               creds: '{"clientId":"${{ vars.AZURE_SP_APPLICATION_ID }}","clientSecret":"${{ secrets.AZURE_SP_CLIENT_SECRET }}","subscriptionId":"6c8e23df-4aec-4ed5-bec5-79853ea6c6c6","tenantId":"${{ vars.AZURE_SP_TENANT_ID }}"}'
           - name: "Configure DBX CLI"
-            run: echo "[DEFAULT]                                                               
-                 host = https://${{ vars.DBX_HOST }}.azuredatabricks.net > ~/.databricks.cfg
+            run: echo "[DEFAULT] \                                                           
+                 host = https://${{ vars.DBX_HOST }}.azuredatabricks.net" > ~/.databricks.cfg
           - name: "Deploy notebooks"
             run: databricks workspace import-dir --overwrite '/notebooks/' '/shared/notebooks/'
