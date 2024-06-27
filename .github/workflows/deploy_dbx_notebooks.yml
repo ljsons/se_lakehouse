@@ -49,7 +49,7 @@ jobs:
           - name: "Az Login"
             uses: azure/login@v2
             with:
-              creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+              creds: '{"clientId":"${{ vars.AZURE_SP_APPLICATION_ID }}","clientSecret":"${{ secrets.AZURE_SP_CLIENT_SECRET }}","subscriptionId":"6c8e23df-4aec-4ed5-bec5-79853ea6c6c6","tenantId":"${{ vars.AZURE_SP_TENANT_ID }}"}'
           - name: "Login to Databricks"
             run: databricks auth login --host https://adb-1389041921641840.0.azuredatabricks.net
           - name: "Deploy notebooks"
