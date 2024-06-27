@@ -27,7 +27,5 @@ jobs:
       - name: "Configure DBX CLI"
         run: echo "[DEFAULT] \                                                           
              host = https://${{ vars.DBX_HOST }}.azuredatabricks.net" > ~/.databricks.cfg
-      - run: ls      
-      - run: databricks bundle deploy --target development
-
-        
+      - name: "Deploy bundle"
+        run: databricks bundle deploy --target development
