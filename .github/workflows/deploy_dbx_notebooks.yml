@@ -16,41 +16,13 @@ jobs:
 
           - name: "Setup CLI"
             uses: databricks/setup-cli@main
-            # The step below does the following:
-            # 1. Sends a POST request to generate an Azure Active Directory token for an Azure service principal
-            # 2. Parses the token from the request response and then saves that in as DATABRICKS_TOKEN in the
-            # GitHub enviornment.
-            # Note: if the API request fails, the request response json will not have an "access_token" field and
-            # the DATABRICKS_TOKEN env variable will be empty.
-        #   - name: "Generate AAD Token"
-        #     run: |
-        #           echo "DATABRICKS_TOKEN=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
-        #           https://login.microsoftonline.com/${{ vars.AZURE_SP_TENANT_ID }}/oauth2/v2.0/token \
-        #           -d 'client_id=${{ vars.AZURE_SP_APPLICATION_ID }}' \
-        #           -d 'grant_type=client_credentials' \
-        #           -d 'scope=2ff814a6-3304-4ab8-85cb-cd0e6f879c1d%2F.default' \
-        #           -d 'client_secret=${{ secrets.AZURE_SP_CLIENT_SECRET }}' |  jq -r  '.access_token')" >> $GITHUB_ENV  
-        #   - name: "Configure CLI"
-        #     run: databricks configure --host https://${{ vars.DBX_HOST }}.azuredatabricks.net --azure_tenant_id ${{ vars.AZURE_SP_TENANT_ID }} --azure-client-id ${{ vars.AZURE_SP_APPLICATION_ID }} --azure-client-secret ${{ secrets.AZURE_SP_CLIENT_SECRET }}
-        #   - name: "Login to Databricks"
-        #     run: databricks auth login
-        #   - name: "test variables"
-        #     run: echo ${{ secrets.AZURE_SP_CLIENT_SECRET }}
-        #   - name: "test string inter"
-        #     run: echo "DATABRICKS_HOST=https://${{ vars.DBX_HOST }}.azuredatabricks.net"
-        #   - name: "Set env host"
-        #     run: echo "DATABRICKS_HOST=https://${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
-        #   - name: "Set env token"
-        #     run: echo "ARM_CLIENT_SECRET=${{ secrets.AZURE_SP_CLIENT_SECRET }}" >> $GITHUB_ENV
-        #   - name: "Set env tenant"
-        #     run: echo "ARM_TENANT_ID=${{ vars.AZURE_SP_TENANT_ID }}" >> $GITHUB_ENV
-        #   - name: "Set env client" 
-        #     run: echo "ARM_CLIENT_ID=${{ vars.AZURE_SP_APPLICATION_ID }}" >> $GITHUB_ENV
+          - name: "Set env host"
+            run: echo "DATABRICKS_HOST=https://${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
           - name: "Az Login"
             uses: azure/login@v2
             with:
               creds: '{"clientId":"${{ vars.AZURE_SP_APPLICATION_ID }}","clientSecret":"${{ secrets.AZURE_SP_CLIENT_SECRET }}","subscriptionId":"6c8e23df-4aec-4ed5-bec5-79853ea6c6c6","tenantId":"${{ vars.AZURE_SP_TENANT_ID }}"}'
           - name: "Login to Databricks"
-            run: databricks configure --host https://adb-1389041921641840.0.azuredatabricks.net/
+            run: databricks configure
           - name: "Deploy notebooks"
             run: databricks workspace import-dir --overwrite '/notebooks/' '/shared/notebooks/'
