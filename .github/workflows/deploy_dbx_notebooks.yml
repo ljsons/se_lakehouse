@@ -8,7 +8,8 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-
+        environment:
+          name: dev
         steps:
           - name: "Checkout"
             uses: actions/checkout@v3
@@ -33,6 +34,10 @@ jobs:
         #     run: databricks configure --host https://${{ vars.DBX_HOST }}.azuredatabricks.net --azure_tenant_id ${{ vars.AZURE_SP_TENANT_ID }} --azure-client-id ${{ vars.AZURE_SP_APPLICATION_ID }} --azure-client-secret ${{ secrets.AZURE_SP_CLIENT_SECRET }}
         #   - name: "Login to Databricks"
         #     run: databricks auth login
+          - name: "test variables"
+            run: echo ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+          - name: "test string inter"
+            run: echo "DATABRICKS_HOST=https://(${{ vars.DBX_HOST }}.azuredatabricks.net"
           - name: "Set env host"
             run: echo "DATABRICKS_HOST=https://(${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
           - name: "Set env token"
