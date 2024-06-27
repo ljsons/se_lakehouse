@@ -5,23 +5,26 @@ concurrency: 1
 on:
   push:
     branches:
-      - test
+      - main
 
 jobs:
   deploy:
     name: "Deploy DBX Bundle"
     runs-on: ubuntu-latest
     steps:
-      - name: "Chekcout"
-        uses: actions/checkout@v3
-
       - name: "Setup CLI"
         uses: databricks/setup-cli@main
+      - name: "Set env host"
+        run: echo "DATABRICKS_HOST=https://${{ vars.DBX_HOST }}.azuredatabricks.net" >> $GITHUB_ENV
+      - name: "Az Login"
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ vars.AZURE_SP_APPLICATION_ID }}","clientSecret":"${{ secrets.AZURE_SP_CLIENT_SECRET }}","subscriptionId":"6c8e23df-4aec-4ed5-bec5-79853ea6c6c6","tenantId":"${{ vars.AZURE_SP_TENANT_ID }}"}'
+      - name: "Configure DBX CLI"
+        run: echo "[DEFAULT] \                                                           
+             host = https://${{ vars.DBX_HOST }}.azuredatabricks.net" > ~/.databricks.cfg
 
-      - name: "Login to Databricks"
-        run: databricks auth login 
-      
-      - run: databricks bundle deploy
+      - run: databricks bundle deploy 
         working-directory: . 
 
         
