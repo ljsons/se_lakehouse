@@ -11,6 +11,8 @@ jobs:
   deploy:
     name: "Deploy DBX Bundle"
     runs-on: ubuntu-latest
+    environment:
+      name: dev
     steps:
       - name: "Setup CLI"
         uses: databricks/setup-cli@main
